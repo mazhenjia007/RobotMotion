@@ -1,0 +1,7 @@
+#include <dlfcn.h>
+#include "Kinova.API.CommLayerUbuntu.h"
+#include "KinovaTypes.h"
+#include <stdio.h>
+
+using namespace std;
+
