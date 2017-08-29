@@ -25,6 +25,30 @@ int Display(CartesianPosition pNow){
 	 X, Y, Z, ThetaX/PI*180, ThetaY/PI*180, ThetaZ/PI*180);
 }
 
+int MoveVelocity(TrajectoryPoint pSend, int loop){
+  CartesianPosition pNow;
+  
+  int nDisp = 20;
+  int iDisp = 0;
+  MyGetCartesianPosition(pNow);
+  Display(pNow);
+  cout << endl;
+  for (int i=0; i<loop; i++){
+    if (iDisp==nDisp){
+      MyGetCartesianPosition(pNow);
+      Display(pNow);
+      cout << endl;
+      iDisp = 0;
+    }
+    else{
+      iDisp++;
+    }
+    
+    MySendBasicTrajectory(pSend);
+    usleep(5000);
+  }
+}
+
 int main(){
   int result;
 
@@ -66,10 +90,40 @@ int main(){
       cout << endl;
       usleep(100000);
     }
-
+  
     cout << "Move to Point #2" << endl;
     pSend.Position.Type = CARTESIAN_POSITION;
-    pSend.Position.CartesianPosition.X = 
+    pSend.Position.CartesianPosition.X = 0.10;
+    pSend.Position.CartesianPosition.Y = -0.2;
+    pSend.Position.CartesianPosition.Z = 0.15;
+    pSend.Position.CartesianPosition.ThetaX = PI/180.0*(-180.0);
+    pSend.Position.CartesianPosition.ThetaY = PI/180.0*(0.0);
+    pSend.Position.CartesianPosition.ThetaZ = PI/180.0*(180.0);
+
+    MySendBasicTrajectory(pSend);
+    for (int i=0; i<20; i++){
+      MyGetCartesianPosition(pNow);
+      Display(pNow);
+      cout << endl;
+      usleep(100000);
+    }
+
+    cout << "Move to Point #3" << endl;
+    pSend.Position.CartesianPosition.X = -0.15;
+    pSend.Position.CartesianPosition.Y = -0.35;
+    pSend.Position.CartesianPosition.Z = 0.15;
+    pSend.Position.CartesianPosition.ThetaX = PI/180.0*(-180.0);
+    pSend.Position.CartesianPosition.ThetaY = PI/180.0*(0.0);
+    pSend.Position.CartesianPosition.ThetaZ = PI/180.0*(180.0);
+
+    MySendBasicTrajectory(pSend);
+    for (int i=0; i<20; i++){
+      MyGetCartesianPosition(pNow);
+      Display(pNow);
+      cout << endl;
+      usleep(100000);
+    }
+
   }
 
   return 0;
